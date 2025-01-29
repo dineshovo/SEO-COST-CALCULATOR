@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic SEO Cost Calculator</title>
+    <style>
+        :root {
+            --primary-blue: #0a1f3d;
+            --accent-blue: #1a73e8;
+            --neon-blue: #00f3ff;
+            --space-black: #000010;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--space-black);
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(10, 31, 61, 0.8);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-blue);
+            box-shadow: 0 0 30px rgba(26, 115, 232, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        .calculator-input {
+            margin: 2rem 0;
+        }
+
+        .slider-container {
+            margin: 1.5rem 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--neon-blue);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            background: #1a1a2e;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .result {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+            margin: 1rem 0;
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue));
+            animation: shoot 2s infinite;
+        }
+
+        @keyframes shoot {
+            0% { transform: translateX(-100%) translateY(-100%); opacity: 1; }
+            100% { transform: translateX(200vw) translateY(100vh); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="container">
+        <h1>🚀 Galactic SEO Cost Calculator</h1>
+        
+        <div class="calculator-input">
+            <div class="slider-container">
+                <label for="pages">Number of Pages:</label>
+                <input type="range" id="pages" min="1" max="100" value="10">
+                <span id="pagesValue">10</span>
+            </div>
+            
+            <div class="slider-container">
+                <label for="keywords">Target Keywords:</label>
+                <input type="range" id="keywords" min="5" max="50" value="10">
+                <span id="keywordsValue">10</span>
+            </div>
+            
+            <div class="slider-container">
+                <label for="competitors">Competition Level:</label>
+                <input type="range" id="competitors" min="1" max="3" value="1">
+                <span id="competitorsValue">Low</span>
+            </div>
+            
+            <div class="slider-container">
+                <label for="content">Content Pages:</label>
+                <input type="range" id="content" min="0" max="20" value="5">
+                <span id="contentValue">5</span>
+            </div>
+        </div>
+
+        <div class="result">
+            <h2>Estimated Monthly Cost</h2>
+            <div class="price">$<span id="cost">0</span></div>
+            <p>+ Interstellar Optimization Fees</p>
+        </div>
+    </div>
+
+    <script>
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.opacity = Math.random();
+                star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Calculate SEO cost
+        function calculateCost() {
+            const pages = parseInt(document.getElementById('pages').value);
+            const keywords = parseInt(document.getElementById('keywords').value);
+            const competitors = parseInt(document.getElementById('competitors').value);
+            const content = parseInt(document.getElementById('content').value);
+
+            let baseCost = 500;
+            let pageCost = pages * 20;
+            let keywordCost = keywords * 30;
+            let contentCost = content * 25;
+            let competitionMultiplier = [1, 1.2, 1.5][competitors - 1];
+
+            let totalCost = (baseCost + pageCost + keywordCost + contentCost) * competitionMultiplier;
+            document.getElementById('cost').textContent = Math.round(totalCost);
+        }
+
+        // Update slider values
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const valueSpan = document.getElementById(this.id + 'Value');
+                if (this.id === 'competitors') {
+                    const levels = ['Low', 'Medium', 'High'];
+                    valueSpan.textContent = levels[this.value - 1];
+                } else {
+                    valueSpan.textContent = this.value;
+                }
+                calculateCost();
+            });
+        });
+
+        // Initialize
+        createStars();
+        calculateCost();
+
+        // Create shooting stars periodically
+        setInterval(() => {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(shootingStar);
+            setTimeout(() => shootingStar.remove(), 2000);
+        }, 5000);
+    </script>
+</body>
+</html>
